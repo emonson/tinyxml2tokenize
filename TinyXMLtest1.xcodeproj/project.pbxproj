@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		451A1025161DF90600E84D33 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 451A1024161DF90600E84D33 /* main.cpp */; };
 		451A1027161DF90600E84D33 /* TinyXMLtest1.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = 451A1026161DF90600E84D33 /* TinyXMLtest1.1 */; };
+		451A1034161DFA3600E84D33 /* tinyxml2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 451A1032161DFA3600E84D33 /* tinyxml2.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -28,6 +29,9 @@
 		451A1020161DF90600E84D33 /* TinyXMLtest1 */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = TinyXMLtest1; sourceTree = BUILT_PRODUCTS_DIR; };
 		451A1024161DF90600E84D33 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		451A1026161DF90600E84D33 /* TinyXMLtest1.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = TinyXMLtest1.1; sourceTree = "<group>"; };
+		451A1032161DFA3600E84D33 /* tinyxml2.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = tinyxml2.cpp; sourceTree = "<group>"; };
+		451A1033161DFA3600E84D33 /* tinyxml2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tinyxml2.h; sourceTree = "<group>"; };
+		451A1036161DFB2600E84D33 /* xmltest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = xmltest.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -44,6 +48,7 @@
 		451A1015161DF90600E84D33 = {
 			isa = PBXGroup;
 			children = (
+				451A1031161DF9FE00E84D33 /* Libraries */,
 				451A1023161DF90600E84D33 /* TinyXMLtest1 */,
 				451A1021161DF90600E84D33 /* Products */,
 			);
@@ -62,8 +67,26 @@
 			children = (
 				451A1024161DF90600E84D33 /* main.cpp */,
 				451A1026161DF90600E84D33 /* TinyXMLtest1.1 */,
+				451A1036161DFB2600E84D33 /* xmltest.h */,
 			);
 			path = TinyXMLtest1;
+			sourceTree = "<group>";
+		};
+		451A1031161DF9FE00E84D33 /* Libraries */ = {
+			isa = PBXGroup;
+			children = (
+				451A1035161DFA3D00E84D33 /* tinyxml2 */,
+			);
+			name = Libraries;
+			sourceTree = "<group>";
+		};
+		451A1035161DFA3D00E84D33 /* tinyxml2 */ = {
+			isa = PBXGroup;
+			children = (
+				451A1032161DFA3600E84D33 /* tinyxml2.cpp */,
+				451A1033161DFA3600E84D33 /* tinyxml2.h */,
+			);
+			name = tinyxml2;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -118,6 +141,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				451A1025161DF90600E84D33 /* main.cpp in Sources */,
+				451A1034161DFA3600E84D33 /* tinyxml2.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
