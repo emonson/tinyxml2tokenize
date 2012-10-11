@@ -11,6 +11,7 @@
 		451A1027161DF90600E84D33 /* TinyXMLtest1.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = 451A1026161DF90600E84D33 /* TinyXMLtest1.1 */; };
 		451A1034161DFA3600E84D33 /* tinyxml2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 451A1032161DFA3600E84D33 /* tinyxml2.cpp */; };
 		45FF6FC216271BB1009A109C /* english_stopwords in CopyFiles */ = {isa = PBXBuildFile; fileRef = 457E6C291627105A00A6457C /* english_stopwords */; };
+		45FF6FC916273DFA009A109C /* libANN.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 45FF6FC816273DFA009A109C /* libANN.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -44,6 +45,10 @@
 		451A1033161DFA3600E84D33 /* tinyxml2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tinyxml2.h; sourceTree = "<group>"; };
 		451A1036161DFB2600E84D33 /* xmltest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = xmltest.h; sourceTree = "<group>"; };
 		457E6C291627105A00A6457C /* english_stopwords */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = english_stopwords; sourceTree = "<group>"; };
+		45FF6FC516273AE5009A109C /* ANN.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ANN.h; sourceTree = "<group>"; };
+		45FF6FC616273AE5009A109C /* ANNperf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ANNperf.h; sourceTree = "<group>"; };
+		45FF6FC716273AE5009A109C /* ANNx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ANNx.h; sourceTree = "<group>"; };
+		45FF6FC816273DFA009A109C /* libANN.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libANN.a; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -51,6 +56,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				45FF6FC916273DFA009A109C /* libANN.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -61,6 +67,7 @@
 			isa = PBXGroup;
 			children = (
 				45FF6FBE1627168C009A109C /* Resources */,
+				45FF6FC416273AE5009A109C /* ANN */,
 				451A1031161DF9FE00E84D33 /* Libraries */,
 				451A1023161DF90600E84D33 /* TinyXMLtest1 */,
 				451A1021161DF90600E84D33 /* Products */,
@@ -88,6 +95,7 @@
 		451A1031161DF9FE00E84D33 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				45FF6FC816273DFA009A109C /* libANN.a */,
 				451A1035161DFA3D00E84D33 /* tinyxml2 */,
 			);
 			name = Libraries;
@@ -108,6 +116,16 @@
 				457E6C291627105A00A6457C /* english_stopwords */,
 			);
 			name = Resources;
+			sourceTree = "<group>";
+		};
+		45FF6FC416273AE5009A109C /* ANN */ = {
+			isa = PBXGroup;
+			children = (
+				45FF6FC516273AE5009A109C /* ANN.h */,
+				45FF6FC616273AE5009A109C /* ANNperf.h */,
+				45FF6FC716273AE5009A109C /* ANNx.h */,
+			);
+			path = ANN;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -220,6 +238,10 @@
 		451A102B161DF90600E84D33 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)\"",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -227,6 +249,10 @@
 		451A102C161DF90600E84D33 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)\"",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;

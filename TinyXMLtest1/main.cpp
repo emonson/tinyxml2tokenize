@@ -33,6 +33,8 @@ int gFail = 0;
 #include <string>
 #include <map>
 
+#include "ANN.h"
+
 int example_1( const char* filename )
 {
 	XMLDocument doc;
@@ -118,7 +120,42 @@ int example_1( const char* filename )
    }
     std::cout << term_count_map.size() << " terms in dictionary" << std::endl;
 
+    int       nPts = 0;   // actual number of data points
+    int       dim = 0;    // dimensionality
+	ANNpointArray		dataPts;				// data points
+	ANNpoint			queryPt;				// query point
+	ANNidxArray			nnIdx;					// near neighbor indices
+	ANNdistArray		dists;					// near neighbor distances
+	ANNkd_tree*			kdTree;					// search structure
+        
+	nPts = docIndex;    // TODO: check for off by one errors!!
+    dim = int(term_count_map.size());
+
+	queryPt = annAllocPt(dim);					// allocate query point
+	dataPts = annAllocPts(nPts, dim);			// allocate data points
+
     
+	kdTree = new ANNkd_tree(					// build search structure
+                            dataPts,					// the data points
+                            nPts,						// number of points
+                            dim);						// dimension of space
+    
+//    kdTree->annkSearch(						// search
+//                       queryPt,						// query point
+//                       k,								// number of near neighbors
+//                       nnIdx,							// nearest neighbors (returned)
+//                       dists,							// distance (returned)
+//                       eps);							// error bound
+
+//	int annkFRSearch(					// approx fixed-radius kNN search
+//                     ANNpoint		q,				// the query point
+//                     ANNdist			sqRad,			// squared radius of query ball
+//                     int				k,				// number of neighbors to return
+//                     ANNidxArray		nn_idx = NULL,	// nearest neighbor array (modified)
+//                     ANNdistArray	dd = NULL,		// dist to near neighbors (modified)
+//                     double			eps=0.0);		// error bound
+    
+        
 	return doc.ErrorID();
 }
 
