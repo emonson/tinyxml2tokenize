@@ -10,18 +10,29 @@
 		451A1025161DF90600E84D33 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 451A1024161DF90600E84D33 /* main.cpp */; };
 		451A1027161DF90600E84D33 /* TinyXMLtest1.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = 451A1026161DF90600E84D33 /* TinyXMLtest1.1 */; };
 		451A1034161DFA3600E84D33 /* tinyxml2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 451A1032161DFA3600E84D33 /* tinyxml2.cpp */; };
+		45FF6FC216271BB1009A109C /* english_stopwords in CopyFiles */ = {isa = PBXBuildFile; fileRef = 457E6C291627105A00A6457C /* english_stopwords */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
 		451A101E161DF90600E84D33 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = /usr/share/man/man1/;
+			buildActionMask = 8;
+			dstPath = /usr/share/man/man1;
 			dstSubfolderSpec = 0;
 			files = (
 				451A1027161DF90600E84D33 /* TinyXMLtest1.1 in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 1;
+		};
+		45FF6FC116271BA3009A109C /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 7;
+			files = (
+				45FF6FC216271BB1009A109C /* english_stopwords in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
 
@@ -32,6 +43,7 @@
 		451A1032161DFA3600E84D33 /* tinyxml2.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = tinyxml2.cpp; sourceTree = "<group>"; };
 		451A1033161DFA3600E84D33 /* tinyxml2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tinyxml2.h; sourceTree = "<group>"; };
 		451A1036161DFB2600E84D33 /* xmltest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = xmltest.h; sourceTree = "<group>"; };
+		457E6C291627105A00A6457C /* english_stopwords */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = english_stopwords; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -48,6 +60,7 @@
 		451A1015161DF90600E84D33 = {
 			isa = PBXGroup;
 			children = (
+				45FF6FBE1627168C009A109C /* Resources */,
 				451A1031161DF9FE00E84D33 /* Libraries */,
 				451A1023161DF90600E84D33 /* TinyXMLtest1 */,
 				451A1021161DF90600E84D33 /* Products */,
@@ -89,6 +102,14 @@
 			name = tinyxml2;
 			sourceTree = "<group>";
 		};
+		45FF6FBE1627168C009A109C /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				457E6C291627105A00A6457C /* english_stopwords */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -99,6 +120,7 @@
 				451A101C161DF90600E84D33 /* Sources */,
 				451A101D161DF90600E84D33 /* Frameworks */,
 				451A101E161DF90600E84D33 /* CopyFiles */,
+				45FF6FC116271BA3009A109C /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -228,6 +250,7 @@
 				451A102C161DF90600E84D33 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

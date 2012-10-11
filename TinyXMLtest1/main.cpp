@@ -25,7 +25,11 @@ int gFail = 0;
 // http://www.boost.org/doc/libs/1_40_0/libs/tokenizer/char_separator.htm
 
 #include <iostream>
+#include <fstream>
 #include <boost/tokenizer.hpp>
+#include <boost/algorithm/string/case_conv.hpp>
+#include <boost/algorithm/string/predicate.hpp>
+#include <boost/algorithm/string/classification.hpp>
 #include <string>
 #include <map>
 
@@ -36,6 +40,21 @@ int example_1( const char* filename )
     
 	typedef boost::tokenizer<boost::char_separator<char> > tokenizer;
 	boost::char_separator<char> sep(" \t\n¡!¿?⸘‽“”‘’‛‟.,‚„'\"′″´˝^°¸˛¨`˙˚ªº…:;&_¯­–‑—§#⁊¶†‡@%‰‱¦|/\\ˉˆ˘ˇ-‒~*‼⁇⁈⁉$€¢£‹›«»<>{}[]()=+|");
+    
+    // read in stopwords from text file
+    std::ifstream stopfile("english_stopwords", std::ios_base::in);
+    assert(!stopfile.fail());
+    std::map<std::string, bool> stopwords_map;
+    
+    // load stopwords into hash map
+    std::string s;
+    stopfile >> s;
+    while (!stopfile.eof()) {
+        stopwords_map[s] = true;
+        stopfile >> s;
+    }
+    stopfile.close();
+    // assert(!stopfile.fail());
     
     std::map<std::string, int> term_count_map;
     std::map<std::string, int>::iterator term_count_it;
@@ -63,16 +82,25 @@ int example_1( const char* filename )
         {
             // std::cout << "<" << *tok_iter << "> ";
             std::string tmp = *tok_iter;
+            // NOTE: Right now doing a rough length check
             if (tmp.length() > 2) {
-                term_count_it = term_count_map.find(tmp);
-                if (term_count_it == term_count_map.end()) {
-                    // Initialize term count and doc index vector maps for new term
-                    term_count_map[tmp] = 0;
-                    std::vector<int> newvec;
-                    term_indexVec_map[tmp] = newvec;
+                // Only count terms not in stopwords list
+                if (!stopwords_map.count(tmp)) {
+                    // Check for all caps, otherwise convert to lowercase
+                    //   (maybe should just be turning everything to lowercase...)
+                    if (!boost::all(tmp, boost::is_upper())) {
+                        boost::to_lower(tmp);
+                    }
+                    term_count_it = term_count_map.find(tmp);
+                    if (term_count_it == term_count_map.end()) {
+                        // Initialize term count and doc index vector maps for new term
+                        term_count_map[tmp] = 0;
+                        std::vector<int> newvec;
+                        term_indexVec_map[tmp] = newvec;
+                    }
+                    term_count_map[tmp]++;
+                    term_indexVec_map[tmp].push_back(docIndex);
                 }
-                term_count_map[tmp]++;
-                term_indexVec_map[tmp].push_back(docIndex);
             }
         }
         docIndex++;
@@ -137,7 +165,7 @@ int main( int argc, const char** argv )
 //        printf("must specify filename\n");
 //        return EXIT_FAILURE;
 //    }
-    const char* filename = "/Users/emonson/Downloads/Jigsaw/datafiles/VAST2007Contest.jig";
+    const char* filename = "/Users/emonson/Downloads/Jigsaw/datafiles/InfoVisVASTPapers-95-09.jig";
 	example_1( filename );
 //    example_5();
 
