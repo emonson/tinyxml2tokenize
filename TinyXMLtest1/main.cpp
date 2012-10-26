@@ -63,7 +63,13 @@ int example_1( const char* filename )
 
     std::map<std::string, std::vector<int> > term_indexVec_map;
     std::map<std::string, std::vector<int> >::iterator term_indexVec_it;
-    std::map<std::string, int> docID_index_map;
+    
+    std::map<int, std::string> index_docID_map;
+    std::map<int, std::string> index_term_map;
+    
+    // CONSTANTS
+    int MIN_TERM_LENGTH = 2;
+    int MIN_TERM_COUNT = 2;
     
     int docIndex = 0;
 
@@ -74,8 +80,10 @@ int example_1( const char* filename )
         // Extract the document ID from the XML
         XMLElement* docID = documentElement->FirstChildElement("docID");
         std::string id_str(docID->GetText());
-        // Set up hash map of docID string and index which will be used in count vectors
-        docID_index_map[id_str] = docIndex;
+        
+        // Set up hash map of docID string and index keys which will be used in count vectors
+        index_docID_map[docIndex] = id_str;
+        
         // Extract the document text from the XML
         XMLElement* docText = documentElement->FirstChildElement("docText");
         std::string text_str(docText->GetText());
@@ -85,7 +93,7 @@ int example_1( const char* filename )
             // std::cout << "<" << *tok_iter << "> ";
             std::string tmp = *tok_iter;
             // NOTE: Right now doing a rough length check
-            if (tmp.length() > 2) {
+            if (tmp.length() > MIN_TERM_LENGTH) {
                 // Only count terms not in stopwords list
                 if (!stopwords_map.count(tmp)) {
                     // Check for all caps, otherwise convert to lowercase
@@ -108,20 +116,12 @@ int example_1( const char* filename )
         docIndex++;
         // std::cout << "\n";
     }
-    for ( term_count_it=term_count_map.begin() ; term_count_it != term_count_map.end(); term_count_it++ )
-    {
-        std::cout << (*term_count_it).first << " => " << (*term_count_it).second << std::endl;
-        std::vector<int> index_vec = term_indexVec_map[(*term_count_it).first];
-        for ( int ii = 0; ii < index_vec.size(); ii++ )
-        {
-            std::cout << index_vec[ii] << " ";
-        }
-        std::cout << std::endl;
-   }
-    std::cout << term_count_map.size() << " terms in dictionary" << std::endl;
-
-    int       nPts = 0;   // actual number of data points
-    int       dim = 0;    // dimensionality
+    
+    // Now that we have the terms and the documents they came from, we need to 
+    // create the actual term-document vectors out of ANN data structures
+    
+    int nPts = 0;                               // actual number of data points
+    int dim = 0;                                // dimensionality
 	ANNpointArray		dataPts;				// data points
 	ANNpoint			queryPt;				// query point
 	ANNidxArray			nnIdx;					// near neighbor indices
@@ -132,9 +132,58 @@ int example_1( const char* filename )
     dim = int(term_count_map.size());
 
 	queryPt = annAllocPt(dim);					// allocate query point
-	dataPts = annAllocPts(nPts, dim);			// allocate data points
-
     
+    // Allocate the space for points and create array of pointers to coordinate arrays (each dim long)
+	dataPts = annAllocPts(nPts, dim);			// allocate data points
+    
+    // Initialize to zero (counts) since ANN code doesn't do this
+    std::fill_n(dataPts[0], nPts*dim, 0);
+    
+    int term_idx = 0;
+    
+    // Run through all of the entries in the term totals and correpsonding doc index vectors
+    for ( term_count_it=term_count_map.begin() ; term_count_it != term_count_map.end(); term_count_it++ )
+    {
+        // First, check if count passes threshold (could base this on percentiles in future...)
+        if ((*term_count_it).second < MIN_TERM_COUNT)
+        {
+            continue;
+        }
+        
+        // NOTE: Could set up here some sort of entropy thresholds
+        
+        // Record the term with its index as key
+        index_term_map[term_idx] = (*term_count_it).first;
+        
+        // Print
+        std::cout << (*term_count_it).first << " => " << (*term_count_it).second << std::endl;
+        
+        // Convenience vector so iteration and access are more clear
+        std::vector<int> index_vec = term_indexVec_map[(*term_count_it).first];
+        
+        // Run through doc index vectors and increment counts in real data arrays
+        for ( int ii = 0; ii < index_vec.size(); ii++ )
+        {
+            std::cout << index_vec[ii] << " ";
+            // Increment count sums
+            dataPts[index_vec[ii]][term_idx] += 1;
+        }
+        std::cout << std::endl;
+        term_idx++;
+    }
+    std::cout << std::endl << term_count_map.size() << " terms in dictionary, " << term_idx << " terms used" << std::endl << std::endl;
+    
+    // DEBUG: Check counts in dataPts arrays
+//    for ( int docIdx = 0; docIdx < nPts; docIdx++ )
+//    {
+//        for (int termIdx = 0; termIdx < dim; termIdx++)
+//        {
+//            std::cout << dataPts[docIdx][termIdx] << '.';
+//        }
+//        std::cout << std::endl;
+//    }
+    
+    // Build the ANN kd-tree data structure for fast NN lookups
 	kdTree = new ANNkd_tree(					// build search structure
                             dataPts,					// the data points
                             nPts,						// number of points
