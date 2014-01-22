@@ -124,8 +124,8 @@ int example_1( const char* filename )
     int dim = 0;                                // dimensionality
 	ANNpointArray		dataPts;				// data points
 	ANNpoint			queryPt;				// query point
-	ANNidxArray			nnIdx;					// near neighbor indices
-	ANNdistArray		dists;					// near neighbor distances
+	// ANNidxArray			nnIdx;					// near neighbor indices
+	// ANNdistArray		dists;					// near neighbor distances
 	ANNkd_tree*			kdTree;					// search structure
         
 	nPts = docIndex;    // TODO: check for off by one errors!!
